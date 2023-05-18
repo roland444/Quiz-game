@@ -89,3 +89,57 @@ body {
 .quiz-options li:active {
     transform: scale(0.97);
 }
+
+.selected {
+    background-color: var(--grey-color) !important;
+    color: var(--dark-color) !important;
+    border-color: var(--grey-colory) !important;
+    box-shadow: 0 4px 0 0 #bbb !important;
+}
+
+.quiz-foot button {
+    border: none;
+    border-radius: .5rem;
+    outline: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: .5rem 1rem;
+    margin: 0 auto;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    background-color: var(--grey-color);
+    color: var(--dark-color);
+    letter-spacing: 2px;
+    transition: var(--transition);
+    box-shadow: 0 4px 0 0 #bbb;
+}
+
+.quiz-foot button:hover {
+    background-color: #e6e6e6;
+    box-shadow: 0 4px 0 0 #a7a7a7;
+}
+.quiz-foot button:active {
+    transform: scale(0.95);
+}
+
+#play-again {
+    display: none;
+}
+
+@media(max-width: 678px) {
+    .quiz-title {
+        font-size: 1.6rem;
+    }
+    .wrapper {
+        margin: 3rem 0;
+        width: 90%;
+        padding: 1.5rem 1rem 3rem 1rem;
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .quiz-foot button {
+        font-size: 1rem;
+    }
+}
