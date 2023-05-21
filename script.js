@@ -1,18 +1,23 @@
-const question = document.getElementById("question");
-const option = document.querySelectorAll("quiz-options");
+const _question = document.getElementById("question");
+const _option = document.querySelectorAll("quiz-options");
+const _correctScore = document.getElementById("correct-score");
+const _totalQuestion = document.getElementById("total-question");
 
 //let correctAnswer = "";
 let correctScore = 0;
 let askedCount = 0;
 let totalQuestion = 10;
 
-
+window.onload = function () {
+    loadQuestion();
+    _totalQuestion.textContent = totalQuestion;
+    _correctScore.textContent = correctScore;
+}
 
 async function loadQuestion() {
     const APIUrl = "https://the-trivia-api.com/v2/questions";
     const result = await fetch(`${APIUrl}`);
     const data = await result.json();
-    console.log(data)
     showQuestion(data[0]);
 }
 
@@ -22,12 +27,11 @@ function showQuestion(data) {
     let optionsList = incorrectAnswers;
     optionsList.splice(Math.floor(Math.random() * (incorrectAnswers.length + 1)), 0, correctAnswer);
     
-    question.innerHTML = `${data.question.text}`;
-    option.innerHTML = `
-        ${optionsList.map((option) => `
-            <li><span>${option}</span></li>
+    _question.innerHTML = `${data.question.text}`;
+    _option.innerHTML = `
+        ${optionsList.map((_option) => `
+            <li><span>${_option}</span></li>
         `).join("")}
     `;
 }
 
-loadQuestion()
