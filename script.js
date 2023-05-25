@@ -37,8 +37,9 @@ function showQuestion(data) {
             <li> <span> ${option} </span> </li>
         `).join("")}
     `;
-
+    console.log(correctAnswer)
     selectOption();
+    
 }
 
 function selectOption() {
@@ -51,8 +52,6 @@ function selectOption() {
             option.classList.add("selected")
         })
     })
-
-    console.log(correctAnswer)
 }
 
 function checkAnswer() {
@@ -60,13 +59,35 @@ function checkAnswer() {
     if (_options.querySelector(".selected")) {
         let selectedAnswer = _options.querySelector(".selected span").textContent;
         
-        if (selectedAnswer == correctAnswer) {
+        if (selectedAnswer.trim() == HTMLDecode(correctAnswer)) {
             correctScore++;
             _result.innerHTML = `<p><i class = "fas fa-check"></i>Correct answer!</p>`;
         } else {
-            _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer :(</p> <small><b>Correct Answer: </b>${correctAnswer}</small>`;
+            _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer :(</p> <small><b>Correct Answer: </b><span id= "correct-answer">${correctAnswer}</span></small>`;
         }
+        checkCount();
     }
+}
+
+function HTMLDecode(textString) {
+    let doc = new DOMParser().parseFromString(textString, "text/html");
+    return doc.documentElement.textContent;
+}
+
+function checkCount() {
+    askedCount++;
+    setCount();
+    if (askedCount == totalQuestion) {
+
+    } else {
+        setTimeout(() => {
+            loadQuestion();
+        }, 300);
+    }
+}
+function setCount() {
+    _totalQuestion.textContent = totalQuestion;
+    _correctScore.textContent = correctScore;
 }
 
 
