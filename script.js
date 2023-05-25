@@ -10,6 +10,7 @@ let correctAnswer = "", correctScore = askedCount = 0, totalQuestion = 10;
 
 function eventListeners() {
     _checkBtn.addEventListener("click", checkAnswer);
+    _playAgainBtn.addEventListener("click", restartQuiz);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -22,10 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
 async function loadQuestion() {
     const response = await fetch("https://the-trivia-api.com/v2/questions");
     const data = await response.json();
+    _result.innerHTML = "";
     showQuestion(data[0]);
 }
 
 function showQuestion(data) {
+    _checkBtn.disabled = false;
     correctAnswer = data.correctAnswer;
     let incorrectAnswer = data.incorrectAnswers;
     let optionsList = incorrectAnswer;
@@ -66,6 +69,9 @@ function checkAnswer() {
             _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer :(</p> <small><b>Correct Answer: </b><span id= "correct-answer">${correctAnswer}</span></small>`;
         }
         checkCount();
+    } else {
+        _result.innerHTML = `<p><i class = "fas fa-question></i>Please select an option</p>`;
+        _checkBtn.disabled = false;
     }
 }
 
@@ -77,17 +83,28 @@ function HTMLDecode(textString) {
 function checkCount() {
     askedCount++;
     setCount();
-    if (askedCount == totalQuestion) {
-
+    if (correctScore == totalQuestion) {
+        _result.innerHTML = `<p> Your score is ${correctScore}. </p>`;
+        _playAgainBtn.style.display = "block";
+        _checkBtn.style.display = "none";
     } else {
         setTimeout(() => {
             loadQuestion();
-        }, 300);
+        }, 1500);
     }
 }
 function setCount() {
     _totalQuestion.textContent = totalQuestion;
     _correctScore.textContent = correctScore;
+}
+
+function restartQuiz() {
+    correctScore = askedCount = 0;
+    _playAgainBtn.style.display = "none";
+    _checkBtn.style.display = "block";
+    _checkBtn.disabled = false;
+    setCount();
+    loadQuestion();
 }
 
 
