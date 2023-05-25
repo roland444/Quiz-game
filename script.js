@@ -6,16 +6,13 @@ const _checkBtn = document.getElementById("check-answer");
 const _playAgainBtn = document.getElementById("play-again");
 const _result = document.getElementById("result");
 
-let correctAnswer = "";
-let correctScore = 0;
-let askedCount = 0;
-let totalQuestion = 10;
+let correctAnswer = "", correctScore = askedCount = 0, totalQuestion = 10;
 
 function eventListeners() {
-    _checkBtn.addEventListener("click", checkAnswer)
+    _checkBtn.addEventListener("click", checkAnswer);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
     loadQuestion();
     eventListeners();
     _totalQuestion.textContent = totalQuestion;
@@ -29,7 +26,7 @@ async function loadQuestion() {
 }
 
 function showQuestion(data) {
-    let correctAnswer = data.correctAnswer;
+    correctAnswer = data.correctAnswer;
     let incorrectAnswer = data.incorrectAnswers;
     let optionsList = incorrectAnswer;
     optionsList.splice(Math.floor(Math.random() * (incorrectAnswer.length + 1)), 0, correctAnswer);
@@ -67,7 +64,7 @@ function checkAnswer() {
             correctScore++;
             _result.innerHTML = `<p><i class = "fas fa-check"></i>Correct answer!</p>`;
         } else {
-            _result.innerHTML = `<p><i class = "fas fa-check"></i>Incorrect answer <small><b>Correct answer: </b>${correctAnswer}</small></p>`;
+            _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer :(</p> <small><b>Correct Answer: </b>${correctAnswer}</small>`;
         }
     }
 }
