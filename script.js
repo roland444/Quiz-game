@@ -1,16 +1,23 @@
 const _question = document.getElementById("question");
 const _options = document.querySelector(".quiz-options");
 const _correctScore = document.getElementById("correct-score");
-const _totalQuestion = document.getElementById("total-question");
+const _totalQuestion = document.getElementById("total-questions");
+const _checkBtn = document.getElementById("check-answer");
+const _playAgainBtn = document.getElementById("play-again");
+const _result = document.getElementById("result");
 
 let correctAnswer = "";
 let correctScore = 0;
 let askedCount = 0;
 let totalQuestion = 10;
 
+function eventListeners() {
+    _checkBtn.addEventListener("click", checkAnswer)
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     loadQuestion();
+    eventListeners();
     _totalQuestion.textContent = totalQuestion;
     _correctScore.textContent = correctScore;
 })
@@ -47,7 +54,25 @@ function selectOption() {
             option.classList.add("selected")
         })
     })
+
+    console.log(correctAnswer)
 }
+
+function checkAnswer() {
+    _checkBtn.disabled = true;
+    if (_options.querySelector(".selected")) {
+        let selectedAnswer = _options.querySelector(".selected span").textContent;
+        
+        if (selectedAnswer == correctAnswer) {
+            correctScore++;
+            _result.innerHTML = `<p><i class = "fas fa-check"></i>Correct answer!</p>`;
+        } else {
+            _result.innerHTML = `<p><i class = "fas fa-check"></i>Incorrect answer <small><b>Correct answer: </b>${correctAnswer}</small></p>`;
+        }
+    }
+}
+
+
 
 
 
